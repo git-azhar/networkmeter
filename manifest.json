@@ -1,13 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Network Meter",
-  "version": "2.1.0",
-  "description": "Real-time network speed, ping, public IP, ISP info, and daily usage tracking.",
+  "version": "2.2.0",
+  "description": "Real-time speed, ping, jitter, public IP, ISP detection, alerts, daily usage & 7-day history.",
   "permissions": [
     "storage",
     "webRequest",
     "alarms",
-    "offscreen"
+    "offscreen",
+    "notifications"
   ],
   "host_permissions": [
     "<all_urls>"

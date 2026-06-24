@@ -10,8 +10,11 @@
   <!-- Header -->
   <div class="header">
     <div class="header-left">
-      <div class="app">Network Meter</div>
-      <div id="sub" class="sub">—</div>
+      <img src="icons/icon32.png" class="header-icon" alt="">
+      <div>
+        <div class="app">Network Meter</div>
+        <div id="sub" class="sub">—</div>
+      </div>
     </div>
     <label class="switch">
       <input id="toggle" type="checkbox">
@@ -23,6 +26,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="speed">Speed</button>
     <button class="tab" data-tab="network">Network</button>
+    <button class="tab" data-tab="stats">Stats</button>
     <button class="tab" data-tab="history">History</button>
   </div>
 
@@ -38,11 +42,13 @@
       <div class="speedRow">
         <div class="speedBox">
           <div class="cap">⬇ Download</div>
-          <div id="down" class="num">—</div>
+          <div id="down" class="num blue">—</div>
+          <div class="peakLine">Peak: <span id="peakDown">—</span></div>
         </div>
         <div class="speedBox">
           <div class="cap">⬆ Upload</div>
-          <div id="up" class="num">—</div>
+          <div id="up" class="num green">—</div>
+          <div class="peakLine">Peak: <span id="peakUp">—</span></div>
         </div>
       </div>
 
@@ -52,17 +58,17 @@
           <span id="pingVal" class="pingNum">—</span>
         </div>
         <div class="pingBox">
-          <span class="cap">📶 Quality</span>
-          <span id="qualityVal" class="pingNum">—</span>
+          <span class="cap">〰 Jitter</span>
+          <span id="jitterVal" class="pingNum">—</span>
         </div>
         <div class="pingBox">
-          <span class="cap">🔄 Active</span>
-          <span id="activeReqs" class="pingNum">—</span>
+          <span class="cap">📶 Quality</span>
+          <span id="qualityVal" class="pingNum">—</span>
         </div>
       </div>
 
       <div class="mini">
-        <div class="miniLeft">Auto: <span id="autoState">OFF</span></div>
+        <div class="miniLeft">⏱ Uptime: <span id="uptimeVal">—</span></div>
         <div id="badgeHint" class="miniRight">Badge: —</div>
       </div>
     </div>
@@ -71,13 +77,13 @@
       <div class="panelTop">
         <div class="panelTitle">Last 60 samples</div>
         <div class="chartLegend">
-          <span class="legendDot blue"></span><span>↓</span>
-          <span class="legendDot green"></span><span>↑</span>
-          <span class="legendDot yellow"></span><span>ping</span>
+          <span class="legendDot ldblue"></span><span>↓</span>
+          <span class="legendDot ldgreen"></span><span>↑</span>
+          <span class="legendDot ldyellow"></span><span>ping</span>
         </div>
         <button id="speedTestBtn" class="ghost">Test</button>
       </div>
-      <canvas id="chart" width="340" height="110"></canvas>
+      <canvas id="chart" width="340" height="100"></canvas>
       <div id="status" class="status"></div>
     </div>
 
@@ -96,7 +102,7 @@
           <div id="todayUp" class="usageVal">—</div>
         </div>
         <div class="usageBox">
-          <div class="usageLabel">📦 Requests</div>
+          <div class="usageLabel">📦 Reqs</div>
           <div id="todayReqs" class="usageVal">—</div>
         </div>
       </div>
@@ -104,13 +110,16 @@
 
   </div>
 
-  <!-- ── TAB: Network Info ── -->
+  <!-- ── TAB: Network ── -->
   <div id="tab-network" class="tab-panel hidden">
 
     <div class="panel">
       <div class="panelTop">
         <div class="panelTitle">Public IP</div>
-        <button id="refreshIpBtn" class="ghost">Refresh</button>
+        <div style="display:flex;gap:6px">
+          <button id="copyIpBtn" class="ghost" title="Copy IP">Copy</button>
+          <button id="refreshIpBtn" class="ghost">Refresh</button>
+        </div>
       </div>
       <div id="ipInfoArea" class="ipInfoArea">
         <div class="ipLoading">Fetching IP info…</div>
@@ -118,25 +127,70 @@
     </div>
 
     <div class="panel">
-      <div class="panelTitle" style="margin-bottom:10px">Ping Test</div>
+      <div class="panelTop">
+        <div class="panelTitle">Ping &amp; Jitter</div>
+        <button id="pingTestBtn" class="ghost">Measure</button>
+      </div>
       <div class="pingTestRow">
         <div class="pingBig">
           <div id="pingBigVal" class="pingBigNum">—</div>
-          <div class="pingBigLabel">ms latency</div>
+          <div class="pingBigLabel">ms ping</div>
         </div>
-        <button id="pingTestBtn" class="pill" style="align-self:center">Measure</button>
+        <div class="pingBig">
+          <div id="jitterBigVal" class="pingBigNum" style="color:#f5a623">—</div>
+          <div class="pingBigLabel">ms jitter</div>
+        </div>
       </div>
       <div id="pingStatus" class="status"></div>
     </div>
 
     <div class="panel">
-      <div class="panelTitle" style="margin-bottom:10px">Connection</div>
-      <div class="connGrid">
-        <div class="connRow"><span class="connK">Active requests</span><span id="connActive" class="connV">—</span></div>
-        <div class="connRow"><span class="connK">Today requests</span><span id="connToday" class="connV">—</span></div>
-        <div class="connRow"><span class="connK">Today download</span><span id="connDown" class="connV">—</span></div>
-        <div class="connRow"><span class="connK">Today upload</span><span id="connUp" class="connV">—</span></div>
+      <div class="panelTitle" style="margin-bottom:10px">ISP Change Log</div>
+      <div id="ispHistoryList" class="ispHistoryList">
+        <div class="historyEmpty">No ISP changes detected.</div>
       </div>
+    </div>
+
+  </div>
+
+  <!-- ── TAB: Stats ── -->
+  <div id="tab-stats" class="tab-panel hidden">
+
+    <div class="panel">
+      <div class="panelTop">
+        <div class="panelTitle">7-Day Speed</div>
+        <button id="exportBtn" class="ghost">Export CSV</button>
+      </div>
+      <canvas id="weekChart" width="340" height="120"></canvas>
+      <div class="chartLegend" style="margin-top:6px;justify-content:center">
+        <span class="legendDot ldblue"></span><span>Avg Down</span>
+        <span style="margin:0 6px"></span>
+        <span class="legendDot ldyellow"></span><span>Avg Ping</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panelTitle" style="margin-bottom:10px">Weekly Summary</div>
+      <div id="weeklyTable" class="weeklyTable"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panelTitle" style="margin-bottom:10px">Alerts</div>
+      <div class="alertRow">
+        <div>
+          <div class="alertLabel">Slow speed alert</div>
+          <div class="alertSub">Notify when download drops below threshold</div>
+        </div>
+        <label class="switch">
+          <input id="alertToggle" type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="alertThreshRow" id="alertThreshRow">
+        <span class="alertLabel">Threshold (Mbps)</span>
+        <input id="alertThresh" type="number" min="1" max="1000" value="10" class="threshInput">
+      </div>
+      <div id="alertStatus" class="status"></div>
     </div>
 
   </div>
@@ -149,7 +203,7 @@
         <button id="clearHistoryBtn" class="ghost">Clear</button>
       </div>
       <div id="historyList" class="historyList">
-        <div class="historyEmpty">No tests recorded yet.<br>Run a speed test to start.</div>
+        <div class="historyEmpty">No tests yet. Run a speed test to start.</div>
       </div>
     </div>
   </div>
