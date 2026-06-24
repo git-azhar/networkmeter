@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Network Meter</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <div class="header">
+      <div>
+        <div class="app">Network Meter</div>
+        <div id="sub" class="sub">—</div>
+      </div>
+      <label class="switch">
+        <input id="toggle" type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="hero">
+      <div class="heroTop">
+        <div class="heroTitle">Network Speed</div>
+        <button id="autoBtn" class="pill">Start Auto</button>
+      </div>
+
+      <div class="speedRow">
+        <div class="speedBox">
+          <div class="cap">⬇ Download</div>
+          <div id="down" class="num">—</div>
+        </div>
+        <div class="speedBox">
+          <div class="cap">⬆ Upload</div>
+          <div id="up" class="num">—</div>
+        </div>
+      </div>
+
+      <div class="mini">
+        <div class="miniLeft">Every 3s: <span id="autoState">OFF</span></div>
+        <div id="badgeHint" class="miniRight">Badge: —</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panelTop">
+        <div class="panelTitle">Last 60 samples</div>
+        <button id="speedTestBtn" class="ghost">Test</button>
+      </div>
+      <canvas id="chart" width="340" height="100"></canvas>
+      <div id="status" class="status"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panelTop">
+        <div class="panelTitle">Today usage</div>
+        <button id="resetBtn" class="ghost">Reset</button>
+      </div>
+      <div class="usage">
+        <div><span class="k">Down</span><span id="todayDown" class="v">—</span></div>
+        <div><span class="k">Up</span><span id="todayUp" class="v">—</span></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a id="openOptions" class="link" href="#">Settings</a>
+      <span class="dot">•</span>
+      <span id="ver" class="ver">—</span>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

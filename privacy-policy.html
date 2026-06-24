@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Network Meter</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #070911;
+      --bg-card:   #0a0d16;
+      --bg-subtle: #0d1225;
+      --blue:      #2b78ff;
+      --blue-dim:  #1a3870;
+      --blue-glow: rgba(43,120,255,0.12);
+      --text:      #eef3ff;
+      --text-muted:#7a9acc;
+      --text-dim:  #3a5a7a;
+      --border:    rgba(255,255,255,0.07);
+      --green:     #4ecfa0;
+      --radius:    16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      background: rgba(7,9,17,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-ring {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--blue);
+      background: var(--bg-subtle);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900;
+      font-size: 13px;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .header-name {
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .header-sep { color: var(--text-dim); margin: 0 4px; }
+
+    .header-page {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 64px 24px 120px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 56px 0 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 56px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px; height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    h1 span { color: var(--blue); }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin-bottom: 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--blue-dim);
+      background: var(--blue-glow);
+      color: var(--text-muted);
+    }
+
+    .badge-green {
+      border-color: rgba(78,207,160,0.3);
+      background: rgba(78,207,160,0.08);
+      color: var(--green);
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── Summary cards ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .summary-card .card-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .summary-card h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .summary-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .summary-card.positive {
+      border-color: rgba(78,207,160,0.2);
+      background: rgba(78,207,160,0.04);
+    }
+
+    .summary-card.positive h3 { color: var(--green); }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p { color: var(--text-muted); margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Detail table ── */
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+
+    .detail-table th {
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-table td {
+      padding: 14px 16px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .detail-table tr:last-child td { border-bottom: none; }
+
+    .detail-table td:first-child {
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      width: 200px;
+    }
+
+    .pill-yes {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(78,207,160,0.1);
+      color: var(--green);
+      border: 1px solid rgba(78,207,160,0.25);
+    }
+
+    .pill-no {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(43,120,255,0.08);
+      color: var(--blue);
+      border: 1px solid var(--blue-dim);
+    }
+
+    /* ── Permission block ── */
+    .perm-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin: 20px 0; }
+
+    .perm-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .perm-name {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      padding: 3px 10px;
+      background: var(--blue-glow);
+      border-radius: 6px;
+      border: 1px solid var(--blue-dim);
+      display: inline-block;
+      margin-top: 1px;
+    }
+
+    .perm-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Highlight box ── */
+    .highlight-box {
+      background: rgba(43,120,255,0.06);
+      border: 1px solid var(--blue-dim);
+      border-left: 3px solid var(--blue);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 24px 0;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .highlight-box strong { color: var(--text); }
+
+    /* ── Contact card ── */
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .contact-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--blue);
+      background: var(--blue-glow);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .contact-info h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .contact-info p { margin-bottom: 8px; font-size: 14px; }
+
+    .contact-info a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact-info a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    footer a { color: var(--blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .perm-item { grid-template-columns: 1fr; }
+      .contact-card { flex-direction: column; }
+      .detail-table td:first-child { width: auto; white-space: normal; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-ring">NM</div>
+      <span class="header-name">Network Meter</span>
+      <span class="header-sep">·</span>
+      <span class="header-page">Privacy Policy</span>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eyebrow">Privacy Policy</div>
+      <h1>Your data stays<br><span>on your device.</span></h1>
+      <p class="hero-sub">
+        Network Meter is built with a simple principle: measure your network speed locally,
+        store nothing remotely, and never share anything about you with anyone.
+      </p>
+      <div class="hero-meta">
+        <span class="badge"><span class="badge-dot"></span>Last updated: June 2026</span>
+        <span class="badge"><span class="badge-dot"></span>Applies to v2.0.0 and above</span>
+        <span class="badge badge-green"><span class="badge-dot"></span>No data collected</span>
+      </div>
+    </div>
+
+    <!-- Summary cards -->
+    <div class="summary-grid">
+      <div class="summary-card positive">
+        <span class="card-icon">🔒</span>
+        <h3>No personal data collected</h3>
+        <p>We do not collect your name, email, IP address, location, or any identifying information.</p>
+      </div>
+      <div class="summary-card positive">
+        <span class="card-icon">💾</span>
+        <h3>Everything stored locally</h3>
+        <p>All speed readings, settings, and usage data are stored only on your device using Chrome's local storage.</p>
+      </div>
+      <div class="summary-card positive">
+        <span class="card-icon">🚫</span>
+        <h3>No third-party sharing</h3>
+        <p>We do not sell, share, or transfer any data to advertisers, analytics services, or any third party.</p>
+      </div>
+      <div class="summary-card positive">
+        <span class="card-icon">👁️</span>
+        <h3>No page content read</h3>
+        <p>The extension only reads response byte sizes — never page content, URLs, form data, or browsing history.</p>
+      </div>
+    </div>
+
+    <!-- 1. Introduction -->
+    <div class="section">
+      <div class="section-label">Overview</div>
+      <h2>1. Introduction</h2>
+      <p>
+        This Privacy Policy describes how Network Meter ("the Extension"), developed by AZHAR
+        (publisher: AZ&amp;G), handles information when you install and use the extension in
+        Google Chrome or Microsoft Edge.
+      </p>
+      <p>
+        Network Meter's sole purpose is to measure and display your real-time internet download
+        and upload speed in the browser toolbar. It tracks daily data usage locally and allows
+        you to run manual or automatic speed tests against Cloudflare's public speed infrastructure.
+      </p>
+      <p>
+        By installing or using the Extension, you agree to this Privacy Policy.
+        If you do not agree, please uninstall the Extension.
+      </p>
+    </div>
+
+    <!-- 2. Data collected -->
+    <div class="section">
+      <div class="section-label">Data</div>
+      <h2>2. What Data Is Collected</h2>
+      <p>
+        Network Meter collects <strong style="color: var(--text)">no personal data</strong>.
+        The following table summarises every category of information and how it is handled:
+      </p>
+
+      <table class="detail-table">
+        <thead>
+          <tr>
+            <th>Data Type</th>
+            <th>Collected?</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Personal identity</td>
+            <td><span class="pill-no">Never</span></td>
+            <td>Name, email, age, address — none of this is accessed or stored.</td>
+          </tr>
+          <tr>
+            <td>Browsing history</td>
+            <td><span class="pill-no">Never</span></td>
+            <td>URLs, page titles, or visited sites are never read or recorded.</td>
+          </tr>
+          <tr>
+            <td>Page content</td>
+            <td><span class="pill-no">Never</span></td>
+            <td>The extension reads only the <code style="color:var(--blue);font-size:13px">Content-Length</code> header to count bytes. No page text, images, or form data is accessed.</td>
+          </tr>
+          <tr>
+            <td>Speed readings</td>
+            <td><span class="pill-yes">Local only</span></td>
+            <td>Download/upload Bps values are stored in <code style="color:var(--blue);font-size:13px">chrome.storage.local</code> on your device. They never leave your browser.</td>
+          </tr>
+          <tr>
+            <td>Daily usage totals</td>
+            <td><span class="pill-yes">Local only</span></td>
+            <td>Byte counts for the current day are stored locally and reset each day. Never transmitted.</td>
+          </tr>
+          <tr>
+            <td>User preferences</td>
+            <td><span class="pill-yes">Local only</span></td>
+            <td>Settings such as test duration and auto-interval are stored locally using <code style="color:var(--blue);font-size:13px">chrome.storage.local</code>.</td>
+          </tr>
+          <tr>
+            <td>IP address / location</td>
+            <td><span class="pill-no">Never</span></td>
+            <td>The extension does not access, log, or transmit your IP address or geographic location.</td>
+          </tr>
+          <tr>
+            <td>Authentication data</td>
+            <td><span class="pill-no">Never</span></td>
+            <td>Passwords, credentials, tokens — never accessed.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. Permissions -->
+    <div class="section">
+      <div class="section-label">Permissions</div>
+      <h2>3. Permissions Explained</h2>
+      <p>
+        The Extension requests the following browser permissions. Each permission is used
+        strictly for the extension's core functionality and nothing else.
+      </p>
+
+      <ul class="perm-list">
+        <li class="perm-item">
+          <span class="perm-name">storage</span>
+          <span class="perm-desc">Stores speed readings, daily usage totals, and user settings locally on your device using <code style="color:var(--blue)">chrome.storage.local</code>. No data is synced to the cloud or transmitted anywhere.</span>
+        </li>
+        <li class="perm-item">
+          <span class="perm-name">webRequest</span>
+          <span class="perm-desc">Reads only the <code style="color:var(--blue)">Content-Length</code> response header and upload request body sizes to calculate real-time download and upload byte rates. No request URLs, content, or user data are accessed or stored.</span>
+        </li>
+        <li class="perm-item">
+          <span class="perm-name">alarms</span>
+          <span class="perm-desc">Schedules the periodic auto-speed-test timer at your configured interval (default: every 10 seconds). Used only to keep the toolbar badge updated in the background.</span>
+        </li>
+        <li class="perm-item">
+          <span class="perm-name">offscreen</span>
+          <span class="perm-desc">Creates an offscreen document to run the background auto-sampling scheduler, allowing speed tests to continue when the popup is closed. No user data is processed in this document.</span>
+        </li>
+        <li class="perm-item">
+          <span class="perm-name">&lt;all_urls&gt;</span>
+          <span class="perm-desc">Required by <code style="color:var(--blue)">webRequest</code> to intercept network response headers across all websites in order to measure download and upload speeds. The extension reads only byte-size metadata — never content, text, or URL paths.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 4. Third-party services -->
+    <div class="section">
+      <div class="section-label">External Services</div>
+      <h2>4. Third-Party Services</h2>
+      <p>
+        Network Meter performs speed tests using Cloudflare's public speed measurement endpoints:
+      </p>
+
+      <div class="highlight-box">
+        <strong>speed.cloudflare.com/__down</strong> — used to download test payload bytes.<br>
+        <strong>speed.cloudflare.com/__up</strong> — used to upload randomly generated bytes.
+      </div>
+
+      <p>
+        These requests are made solely to measure network throughput. The payloads sent during
+        upload tests are <strong style="color:var(--text)">randomly generated binary data</strong> — they contain
+        no personal information, no browsing data, and no identifiers.
+      </p>
+      <p>
+        Cloudflare's own privacy policy governs their handling of these requests.
+        You can review it at <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a>.
+      </p>
+      <p>
+        The Extension does <strong style="color:var(--text)">not</strong> use any analytics services, advertising networks,
+        crash reporting tools, or any other third-party SDKs.
+      </p>
+    </div>
+
+    <!-- 5. Data storage -->
+    <div class="section">
+      <div class="section-label">Storage</div>
+      <h2>5. Data Storage &amp; Retention</h2>
+      <p>
+        All data produced by the Extension is stored exclusively in
+        <code style="color:var(--blue)">chrome.storage.local</code> — a browser-managed,
+        device-local storage area that is never synchronized to any server or cloud account.
+      </p>
+      <p>
+        The following data is retained locally:
+      </p>
+      <ul style="color:var(--text-muted); padding-left:24px; margin-bottom:16px;">
+        <li style="margin-bottom:8px">Last 60 speed samples (ring buffer) — overwritten continuously</li>
+        <li style="margin-bottom:8px">Today's download and upload byte totals — reset each calendar day</li>
+        <li style="margin-bottom:8px">Last manual speed test result (Mbps values and timestamp)</li>
+        <li style="margin-bottom:8px">User settings (test duration, auto interval, payload size, enabled state)</li>
+      </ul>
+      <p>
+        All locally stored data is permanently deleted when you uninstall the Extension.
+        You can also clear it manually at any time from the Extension's Settings page using Chrome's
+        "Clear data" option.
+      </p>
+    </div>
+
+    <!-- 6. Children -->
+    <div class="section">
+      <div class="section-label">Children</div>
+      <h2>6. Children's Privacy</h2>
+      <p>
+        Network Meter does not knowingly collect any information from anyone,
+        including children under the age of 13. The Extension collects no personal
+        data from any user of any age.
+      </p>
+    </div>
+
+    <!-- 7. Changes -->
+    <div class="section">
+      <div class="section-label">Updates</div>
+      <h2>7. Changes to This Policy</h2>
+      <p>
+        If this Privacy Policy is updated, the revised version will be published at this URL
+        and the "Last updated" date at the top of this page will be changed accordingly.
+      </p>
+      <p>
+        Continued use of the Extension after any changes constitutes your acceptance of
+        the updated policy. Significant changes will also be noted in the Extension's
+        Chrome Web Store changelog.
+      </p>
+    </div>
+
+    <!-- 8. Contact -->
+    <div class="section">
+      <div class="section-label">Contact</div>
+      <h2>8. Contact</h2>
+      <p>If you have any questions or concerns about this Privacy Policy, please reach out:</p>
+
+      <div class="contact-card">
+        <div class="contact-icon">👤</div>
+        <div class="contact-info">
+          <h3>MD AZHAR</h3>
+          <p>Developer — Network Meter</p>
+          <p>
+            Email: <a href="mailto:azhardev@outlook.com">azhardev@outlook.com</a>
+          </p>
+          <p>
+            Website: <a href="https://www.icecampus.in" target="_blank" rel="noopener">icecampus.in</a>
+          </p>
+          <p>
+            Publisher: AZ&amp;G
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="logo-ring">NM</div>
+        <span style="font-weight:800;font-size:15px;color:var(--text)">Network Meter</span>
+      </div>
+      <p>© 2026 AZ&amp;G — MD AZHAR. All rights reserved.</p>
+      <p>
+        <a href="https://www.icecampus.in" target="_blank" rel="noopener">icecampus.in</a>
+        &nbsp;·&nbsp;
+        <a href="mailto:azhardev@outlook.com">azhardev@outlook.com</a>
+      </p>
+      <p style="margin-top:12px">
+        This policy applies to the Network Meter browser extension available on the
+        Chrome Web Store and Microsoft Edge Add-ons.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
