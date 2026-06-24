@@ -1,25 +1,37 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Network Meter</title>
-    <link rel="stylesheet" href="popup.css">
-  </head>
-  <body>
-    <div class="header">
-      <div>
-        <div class="app">Network Meter</div>
-        <div id="sub" class="sub">—</div>
-      </div>
-      <label class="switch">
-        <input id="toggle" type="checkbox">
-        <span class="slider"></span>
-      </label>
+<head>
+  <meta charset="utf-8">
+  <title>Network Meter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="app">Network Meter</div>
+      <div id="sub" class="sub">—</div>
     </div>
+    <label class="switch">
+      <input id="toggle" type="checkbox">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="speed">Speed</button>
+    <button class="tab" data-tab="network">Network</button>
+    <button class="tab" data-tab="history">History</button>
+  </div>
+
+  <!-- ── TAB: Speed ── -->
+  <div id="tab-speed" class="tab-panel">
 
     <div class="hero">
       <div class="heroTop">
-        <div class="heroTitle">Network Speed</div>
+        <div class="heroTitle">Live Speed</div>
         <button id="autoBtn" class="pill">Start Auto</button>
       </div>
 
@@ -34,8 +46,23 @@
         </div>
       </div>
 
+      <div class="pingRow">
+        <div class="pingBox">
+          <span class="cap">⚡ Ping</span>
+          <span id="pingVal" class="pingNum">—</span>
+        </div>
+        <div class="pingBox">
+          <span class="cap">📶 Quality</span>
+          <span id="qualityVal" class="pingNum">—</span>
+        </div>
+        <div class="pingBox">
+          <span class="cap">🔄 Active</span>
+          <span id="activeReqs" class="pingNum">—</span>
+        </div>
+      </div>
+
       <div class="mini">
-        <div class="miniLeft">Every 3s: <span id="autoState">OFF</span></div>
+        <div class="miniLeft">Auto: <span id="autoState">OFF</span></div>
         <div id="badgeHint" class="miniRight">Badge: —</div>
       </div>
     </div>
@@ -43,9 +70,14 @@
     <div class="panel">
       <div class="panelTop">
         <div class="panelTitle">Last 60 samples</div>
+        <div class="chartLegend">
+          <span class="legendDot blue"></span><span>↓</span>
+          <span class="legendDot green"></span><span>↑</span>
+          <span class="legendDot yellow"></span><span>ping</span>
+        </div>
         <button id="speedTestBtn" class="ghost">Test</button>
       </div>
-      <canvas id="chart" width="340" height="100"></canvas>
+      <canvas id="chart" width="340" height="110"></canvas>
       <div id="status" class="status"></div>
     </div>
 
@@ -54,18 +86,81 @@
         <div class="panelTitle">Today usage</div>
         <button id="resetBtn" class="ghost">Reset</button>
       </div>
-      <div class="usage">
-        <div><span class="k">Down</span><span id="todayDown" class="v">—</span></div>
-        <div><span class="k">Up</span><span id="todayUp" class="v">—</span></div>
+      <div class="usageGrid">
+        <div class="usageBox">
+          <div class="usageLabel">⬇ Down</div>
+          <div id="todayDown" class="usageVal">—</div>
+        </div>
+        <div class="usageBox">
+          <div class="usageLabel">⬆ Up</div>
+          <div id="todayUp" class="usageVal">—</div>
+        </div>
+        <div class="usageBox">
+          <div class="usageLabel">📦 Requests</div>
+          <div id="todayReqs" class="usageVal">—</div>
+        </div>
       </div>
     </div>
 
-    <div class="footer">
-      <a id="openOptions" class="link" href="#">Settings</a>
-      <span class="dot">•</span>
-      <span id="ver" class="ver">—</span>
+  </div>
+
+  <!-- ── TAB: Network Info ── -->
+  <div id="tab-network" class="tab-panel hidden">
+
+    <div class="panel">
+      <div class="panelTop">
+        <div class="panelTitle">Public IP</div>
+        <button id="refreshIpBtn" class="ghost">Refresh</button>
+      </div>
+      <div id="ipInfoArea" class="ipInfoArea">
+        <div class="ipLoading">Fetching IP info…</div>
+      </div>
     </div>
 
-    <script src="popup.js"></script>
-  </body>
+    <div class="panel">
+      <div class="panelTitle" style="margin-bottom:10px">Ping Test</div>
+      <div class="pingTestRow">
+        <div class="pingBig">
+          <div id="pingBigVal" class="pingBigNum">—</div>
+          <div class="pingBigLabel">ms latency</div>
+        </div>
+        <button id="pingTestBtn" class="pill" style="align-self:center">Measure</button>
+      </div>
+      <div id="pingStatus" class="status"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panelTitle" style="margin-bottom:10px">Connection</div>
+      <div class="connGrid">
+        <div class="connRow"><span class="connK">Active requests</span><span id="connActive" class="connV">—</span></div>
+        <div class="connRow"><span class="connK">Today requests</span><span id="connToday" class="connV">—</span></div>
+        <div class="connRow"><span class="connK">Today download</span><span id="connDown" class="connV">—</span></div>
+        <div class="connRow"><span class="connK">Today upload</span><span id="connUp" class="connV">—</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── TAB: History ── -->
+  <div id="tab-history" class="tab-panel hidden">
+    <div class="panel" style="padding-bottom:6px">
+      <div class="panelTop">
+        <div class="panelTitle">Test History</div>
+        <button id="clearHistoryBtn" class="ghost">Clear</button>
+      </div>
+      <div id="historyList" class="historyList">
+        <div class="historyEmpty">No tests recorded yet.<br>Run a speed test to start.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a id="openOptions" class="link" href="#">Settings</a>
+    <span class="dot">•</span>
+    <span id="ver" class="ver">—</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
 </html>
